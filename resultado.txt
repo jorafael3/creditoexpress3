@@ -1,0 +1,1 @@
+{"Error":"No se puede validar si la imagen recibida es una c\u00e9dula ecuatoriana mayor de edad"}
