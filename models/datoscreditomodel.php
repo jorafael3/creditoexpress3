@@ -51,6 +51,7 @@ class DatosCreditomodel extends Model
         }
     }
 
+    
     function CONSULTA_API_REG($DATOS_CLIENTE)
     {
         $cedula_encr = $DATOS_CLIENTE["cedula_encr"];
