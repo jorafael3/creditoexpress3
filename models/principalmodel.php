@@ -121,64 +121,64 @@ class principalmodel extends Model
             // $url = 'http://186.3.87.6/sms/ads/api.php/getMessage';
 
             $codigo = rand(1000, 9999);
-            // $curl = curl_init($url);
-            // curl_setopt($curl, CURLOPT_URL, $url);
-            // curl_setopt($curl, CURLOPT_POST, true);
-            // curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            $curl = curl_init($url);
+            curl_setopt($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
-            // $username = '999990165';
-            // $password = 'bt3QVPyQ6L8e97hs';
+            $username = '999990165';
+            $password = 'bt3QVPyQ6L8e97hs';
 
-            // $headers = [
-            //     'Accept: application/json',
-            //     'Content-Type: application/json',
-            // ];
-            // curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+            $headers = [
+                'Accept: application/json',
+                'Content-Type: application/json',
+            ];
+            curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
-            // $phoneNumber = $celular;
-            // $messageId = "144561";
-            // // $transactionId = 141569;
-            // $dataVariable = [$codigo];
-            // $transactionId = uniqid();
+            $phoneNumber = $celular;
+            $messageId = "144561";
+            // $transactionId = 141569;
+            $dataVariable = [$codigo];
+            $transactionId = uniqid();
 
-            // $dataWs = [
-            //     'phoneNumber' => $phoneNumber,
-            //     'messageId' => $messageId,
-            //     'transactionId' => $transactionId,
-            //     'dataVariable' => $dataVariable,
-            // ];
+            $dataWs = [
+                'phoneNumber' => $phoneNumber,
+                'messageId' => $messageId,
+                'transactionId' => $transactionId,
+                'dataVariable' => $dataVariable,
+            ];
 
-            // curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($dataWs));
+            curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($dataWs));
 
-            // // Set Basic Authentication
-            // curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-            // curl_setopt($curl, CURLOPT_USERPWD, "$username:$password");
+            // Set Basic Authentication
+            curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+            curl_setopt($curl, CURLOPT_USERPWD, "$username:$password");
 
-            // // for debug only!
-            // curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-            // curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+            // for debug only!
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
-            // $resp = curl_exec($curl);
-            // curl_close($curl);
-            // // $resp = '{"codError":100,"desError":"OK","transactionId":"240305230212179130"}';
+            $resp = curl_exec($curl);
+            curl_close($curl);
+            // $resp = '{"codError":100,"desError":"OK","transactionId":"240305230212179130"}';
 
-            // $responseData = json_decode($resp, true);
+            $responseData = json_decode($resp, true);
 
-            // // Verificar si la solicitud fue exitosa
-            // // Verificar el código de error y mostrar la respuesta
-            // if (isset($responseData['codError'])) {
-            //     if ($responseData['codError'] == 100) {
-            //         // echo "Mensaje enviado correctamente. Transaction ID: ";
-            //         // echo json_encode("");
-            //         return [1, $codigo, $responseData];
-            //     } else {
-            //         return [0, 0];
-            //         // echo "Error: " . $responseData['desError'];
-            //     }
-            // } else {
-            //     return [0, 0];
-            //     // echo "Error desconocido al enviar el mensaje.";
-            // }
+            // Verificar si la solicitud fue exitosa
+            // Verificar el código de error y mostrar la respuesta
+            if (isset($responseData['codError'])) {
+                if ($responseData['codError'] == 100) {
+                    // echo "Mensaje enviado correctamente. Transaction ID: ";
+                    // echo json_encode("");
+                    return [1, $codigo, $responseData];
+                } else {
+                    return [0, 0];
+                    // echo "Error: " . $responseData['desError'];
+                }
+            } else {
+                return [0, 0];
+                // echo "Error desconocido al enviar el mensaje.";
+            }
             return [1, $codigo, []];
         } catch (Exception $e) {
 
@@ -375,182 +375,182 @@ class principalmodel extends Model
             $VAL_CONSULTA = $this->VALIDAR_CEDULA_ASOCIADA_OTRO_NUMERO($param);
             // echo json_encode([$VAL_CONSULTA]);
             // exit();
-            if ($param["IMAGEN"] == null) {
-                echo json_encode([0, "", "Debe tomarse una foto valida", "error"]);
-                exit();
-            } else {
-                $IMAGEN = explode("base64,", $param["IMAGEN"]);
-                // $IMAGECEDULA = explode("base64,", $param["IMAGECEDULA"]);
-                // $IMAGEN = "";
-                $IMAGECEDULA = "";
-                $IMAGEN = $IMAGEN[1];
-                // $IMAGECEDULA = $IMAGECEDULA[1];
-                if ($VAL_CONSULTA[0] == 1) {
-                    $VAL_CEDULA_ = $this->INSERTAR_CEDULA_($param);
-                    // echo json_encode($VAL_CEDULA_);
+            // if ($param["IMAGEN"] == null) {
+            //     echo json_encode([0, "", "Debe tomarse una foto valida", "error"]);
+            //     exit();
+            // } else {
+            // $IMAGEN = explode("base64,", $param["IMAGEN"]);
+            // $IMAGECEDULA = explode("base64,", $param["IMAGECEDULA"]);
+            $IMAGEN = "";
+            $IMAGECEDULA = "";
+            // $IMAGEN = $IMAGEN[1];
+            // $IMAGECEDULA = $IMAGECEDULA[1];
+            if ($VAL_CONSULTA[0] == 1) {
+                $VAL_CEDULA_ = $this->INSERTAR_CEDULA_($param);
+                // echo json_encode($VAL_CEDULA_);
+                // exit();
+                if ($VAL_CEDULA_[0] == 1) {
+                    $ID_UNICO_TRANSACCION = $VAL_CEDULA_[2];
+                    // echo json_encode($ID_UNICO_TRANSACCION);
                     // exit();
-                    if ($VAL_CEDULA_[0] == 1) {
-                        $ID_UNICO_TRANSACCION = $VAL_CEDULA_[2];
-                        // echo json_encode($ID_UNICO_TRANSACCION);
-                        // exit();
-                        $DATOS_API_CEDULA = $this->DATOS_API_REGISTRO($ID_UNICO_TRANSACCION, $IMAGEN, $IMAGECEDULA, $CEDULA_);
+                    $DATOS_API_CEDULA = $this->DATOS_API_REGISTRO($ID_UNICO_TRANSACCION, $IMAGEN, $IMAGECEDULA, $CEDULA_);
 
-                        if ($DATOS_API_CEDULA[0] == 1) {
-                            $GUARDAR_DATOS_API_REG = $this->GUARDAR_DATOS_API_REGISTRO($DATOS_API_CEDULA[1][0], $ID_UNICO_TRANSACCION);
-                            if ($GUARDAR_DATOS_API_REG[0] == 1) {
-                                $FECHA_NACIM = trim($DATOS_API_CEDULA[1][0]->FECHA_NACIM);
-                                $DATOS_CRE = $this->Obtener_Datos_Credito($CEDULA_, $FECHA_NACIM, $celular, $ID_UNICO_TRANSACCION, $DATOS_API_CEDULA, $IMAGEN);
-                                if ($DATOS_CRE[0] == 1) {
-                                    $DATOS_API_CREDITO = $this->DATOS_API_CREDITO($ID_UNICO_TRANSACCION);
-                                    if ($DATOS_API_CREDITO[0] == 1) {
-                                        $DATOS_CREDITO_ = $DATOS_API_CREDITO[1][0];
-                                        $TIPO_CONSULTA = $tipo;
-                                        $this->MOSTRAR_RESULTADO($DATOS_CREDITO_, $ID_UNICO_TRANSACCION, $TIPO_CONSULTA);
-                                        // echo json_encode($DATOS_API_CREDITO);
-                                        // exit();
-                                    }
-                                } else if ($DATOS_CRE[0] == 2) {
-                                    $_inci = array(
-                                        "ERROR_TYPE" => "API SOL 2",
-                                        "ERROR_CODE" => json_encode($DATOS_CRE[1]),
-                                        "ERROR_TEXT" => json_encode($DATOS_CRE[2]),
-                                    );
-                                    $INC = $this->INCIDENCIAS($_inci);
-                                    $this->ELIMINAR_LINEA_ERROR($ID_UNICO_TRANSACCION);
-                                    echo json_encode([0, "Error al realizar la consulta", "Por favor intentelo en un momento", "error", $DATOS_CRE]);
-                                    exit();
-                                } else if ($DATOS_CRE[0] == 3) {
-                                    $_inci = array(
-                                        "ERROR_TYPE" => "API SOL 3",
-                                        "ERROR_CODE" => json_encode($DATOS_CRE[1]),
-                                        "ERROR_TEXT" => json_encode($DATOS_CRE[2]),
-                                    );
-                                    $INC = $this->INCIDENCIAS($_inci);
-                                    $this->ELIMINAR_LINEA_ERROR($ID_UNICO_TRANSACCION);
-                                    echo json_encode([0, "Error al realizar la consulta", "Por favor intentelo en un momento", "error", $_inci]);
-                                    exit();
-                                } else {
-                                    $_inci = array(
-                                        "ERROR_TYPE" => "API SOL",
-                                        "ERROR_CODE" => $DATOS_CRE[1],
-                                        "ERROR_TEXT" => $DATOS_CRE[2] . "-" . $DATOS_CRE[3],
-                                    );
-                                    $INC = $this->INCIDENCIAS($_inci);
-                                    $this->ELIMINAR_LINEA_ERROR($ID_UNICO_TRANSACCION);
-                                    echo json_encode([0, "Error al realizar la consulta", "Por favor intentelo en un momento", "error", $DATOS_CRE]);
-                                    exit();
+                    if ($DATOS_API_CEDULA[0] == 1) {
+                        $GUARDAR_DATOS_API_REG = $this->GUARDAR_DATOS_API_REGISTRO($DATOS_API_CEDULA[1][0], $ID_UNICO_TRANSACCION);
+                        if ($GUARDAR_DATOS_API_REG[0] == 1) {
+                            $FECHA_NACIM = trim($DATOS_API_CEDULA[1][0]->FECHA_NACIM);
+                            $DATOS_CRE = $this->Obtener_Datos_Credito($CEDULA_, $FECHA_NACIM, $celular, $ID_UNICO_TRANSACCION, $DATOS_API_CEDULA, $IMAGEN);
+                            if ($DATOS_CRE[0] == 1) {
+                                $DATOS_API_CREDITO = $this->DATOS_API_CREDITO($ID_UNICO_TRANSACCION);
+                                if ($DATOS_API_CREDITO[0] == 1) {
+                                    $DATOS_CREDITO_ = $DATOS_API_CREDITO[1][0];
+                                    $TIPO_CONSULTA = $tipo;
+                                    $this->MOSTRAR_RESULTADO($DATOS_CREDITO_, $ID_UNICO_TRANSACCION, $TIPO_CONSULTA);
+                                    // echo json_encode($DATOS_API_CREDITO);
+                                    // exit();
                                 }
-                            } else {
+                            } else if ($DATOS_CRE[0] == 2) {
                                 $_inci = array(
-                                    "ERROR_TYPE" => "ERROR GUARDAR_DATOS_API_REG",
-                                    "ERROR_CODE" => $GUARDAR_DATOS_API_REG[1],
-                                    "ERROR_TEXT" => $GUARDAR_DATOS_API_REG[2],
+                                    "ERROR_TYPE" => "API SOL 2",
+                                    "ERROR_CODE" => json_encode($DATOS_CRE[1]),
+                                    "ERROR_TEXT" => json_encode($DATOS_CRE[2]),
+                                );
+                                $INC = $this->INCIDENCIAS($_inci);
+                                $this->ELIMINAR_LINEA_ERROR($ID_UNICO_TRANSACCION);
+                                echo json_encode([0, "Error al realizar la consulta", "Por favor intentelo en un momento", "error", $DATOS_CRE]);
+                                exit();
+                            } else if ($DATOS_CRE[0] == 3) {
+                                $_inci = array(
+                                    "ERROR_TYPE" => "API SOL 3",
+                                    "ERROR_CODE" => json_encode($DATOS_CRE[1]),
+                                    "ERROR_TEXT" => json_encode($DATOS_CRE[2]),
                                 );
                                 $INC = $this->INCIDENCIAS($_inci);
                                 $this->ELIMINAR_LINEA_ERROR($ID_UNICO_TRANSACCION);
                                 echo json_encode([0, "Error al realizar la consulta", "Por favor intentelo en un momento", "error", $_inci]);
                                 exit();
+                            } else {
+                                $_inci = array(
+                                    "ERROR_TYPE" => "API SOL",
+                                    "ERROR_CODE" => $DATOS_CRE[1],
+                                    "ERROR_TEXT" => $DATOS_CRE[2] . "-" . $DATOS_CRE[3],
+                                );
+                                $INC = $this->INCIDENCIAS($_inci);
+                                $this->ELIMINAR_LINEA_ERROR($ID_UNICO_TRANSACCION);
+                                echo json_encode([0, "Error al realizar la consulta", "Por favor intentelo en un momento", "error", $DATOS_CRE]);
+                                exit();
                             }
                         } else {
                             $_inci = array(
-                                "ERROR_TYPE" => "ERROR DATOS_API_REGISTRO_SEN",
-                                "ERROR_CODE" => "DATOS_API_REGISTRO_SEN",
-                                "ERROR_TEXT" => "ERROR AL OBTENER DATOS REGISTRO" . json_encode($DATOS_API_CEDULA),
+                                "ERROR_TYPE" => "ERROR GUARDAR_DATOS_API_REG",
+                                "ERROR_CODE" => $GUARDAR_DATOS_API_REG[1],
+                                "ERROR_TEXT" => $GUARDAR_DATOS_API_REG[2],
                             );
                             $INC = $this->INCIDENCIAS($_inci);
                             $this->ELIMINAR_LINEA_ERROR($ID_UNICO_TRANSACCION);
-                            echo json_encode([0, "Error al realizar la consulta", $DATOS_API_CEDULA[1], "error", $_inci]);
+                            echo json_encode([0, "Error al realizar la consulta", "Por favor intentelo en un momento", "error", $_inci]);
                             exit();
                         }
-                        // if ($DATOS_API_CEDULA[0] == 1) {
-                        //     if ($GUARDAR_DATOS_API_REG[0] == 1) {
-                        //         $FECHA_NACIM = trim($DATOS_API_CEDULA[1]["SOCIODEMOGRAFICO"][0]["FECH_NAC"]);
-                        //         $DATOS_CRE = $this->Obtener_Datos_Credito($CEDULA_, $FECHA_NACIM, $celular, $ID_UNICO_TRANSACCION, $DATOS_API_CEDULA);
-                        //         // echo json_encode($DATOS_CRE);
-                        //         // exit();
-                        //         if ($DATOS_CRE[0] == 1) {
-                        //             $DATOS_API_CREDITO = $this->DATOS_API_CREDITO($ID_UNICO_TRANSACCION);
-                        //             if ($DATOS_API_CREDITO[0] == 1) {
-                        //                 $DATOS_CREDITO_ = $DATOS_API_CREDITO[1][0];
-                        //                 $TIPO_CONSULTA = $tipo;
-                        //                 $this->MOSTRAR_RESULTADO($DATOS_CREDITO_, $ID_UNICO_TRANSACCION, $TIPO_CONSULTA);
-                        //                 // echo json_encode($DATOS_API_CREDITO);
-                        //                 // exit();
-                        //             }
-                        //         } else if ($DATOS_CRE[0] == 2) {
-                        //             $_inci = array(
-                        //                 "ERROR_TYPE" => "API SOL 2",
-                        //                 "ERROR_CODE" => json_encode($DATOS_CRE[1]),
-                        //                 "ERROR_TEXT" => json_encode($DATOS_CRE[2]),
-                        //             );
-                        //             $INC = $this->INCIDENCIAS($_inci);
-                        //             $this->ELIMINAR_LINEA_ERROR($ID_UNICO_TRANSACCION);
-                        //             echo json_encode([0, "Error al realizar la consulta", "Por favor intentelo en un momento", "error", $DATOS_CRE]);
-                        //             exit();
-                        //         } else if ($DATOS_CRE[0] == 3) {
-                        //             $_inci = array(
-                        //                 "ERROR_TYPE" => "API SOL 3",
-                        //                 "ERROR_CODE" => json_encode($DATOS_CRE[1]),
-                        //                 "ERROR_TEXT" => json_encode($DATOS_CRE[2]),
-                        //             );
-                        //             $INC = $this->INCIDENCIAS($_inci);
-                        //             $this->ELIMINAR_LINEA_ERROR($ID_UNICO_TRANSACCION);
-                        //             echo json_encode([0, "Error al realizar la consulta", "Por favor intentelo en un momento", "error", $_inci]);
-                        //             exit();
-                        //         } else {
-                        //             $_inci = array(
-                        //                 "ERROR_TYPE" => "API SOL",
-                        //                 "ERROR_CODE" => $DATOS_CRE[1],
-                        //                 "ERROR_TEXT" => $DATOS_CRE[2] . "-" . $DATOS_CRE[3],
-                        //             );
-                        //             $INC = $this->INCIDENCIAS($_inci);
-                        //             $this->ELIMINAR_LINEA_ERROR($ID_UNICO_TRANSACCION);
-                        //             echo json_encode([0, "Error al realizar la consulta", "Por favor intentelo en un momento", "error", $DATOS_CRE]);
-                        //             exit();
-                        //         }
-                        //     } else {
-                        //         $_inci = array(
-                        //             "ERROR_TYPE" => "ERROR GUARDAR_DATOS_API_REG",
-                        //             "ERROR_CODE" => $GUARDAR_DATOS_API_REG[1],
-                        //             "ERROR_TEXT" => $GUARDAR_DATOS_API_REG[2],
-                        //         );
-                        //         $INC = $this->INCIDENCIAS($_inci);
-                        //         $this->ELIMINAR_LINEA_ERROR($ID_UNICO_TRANSACCION);
-                        //         echo json_encode([0, "Error al realizar la consulta", "Por favor intentelo en un momento", "error", $_inci]);
-                        //         exit();
-                        //     }
-                        // } else if ($DATOS_API_CEDULA[0] == 2) {
-                        //     $_inci = array(
-                        //         "ERROR_TYPE" => "ENCRIP",
-                        //         "ERROR_CODE" => ($DATOS_API_CEDULA[1]),
-                        //         "ERROR_TEXT" => "ERROR AL OBTENER CEDULA ENCRIPTADA",
-                        //     );
-                        //     $INC = $this->INCIDENCIAS($_inci);
-                        //     $this->ELIMINAR_LINEA_ERROR($ID_UNICO_TRANSACCION);
-                        //     echo json_encode([0, "Error al realizar la consulta", $DATOS_API_CEDULA[1], $_inci]);
-                        //     exit();
-                        // } else if ($DATOS_API_CEDULA[0] == 3) {
-                        //     $_inci = array(
-                        //         "ERROR_TYPE" => "ERROR API REG",
-                        //         "ERROR_CODE" => $DATOS_API_CEDULA[1] . "-" . $DATOS_API_CEDULA[2],
-                        //         "ERROR_TEXT" => "API NO TIENE RESPUESTA",
-                        //     );
-                        //     $INC = $this->INCIDENCIAS($_inci);
-                        //     $this->ELIMINAR_LINEA_ERROR($ID_UNICO_TRANSACCION);
-                        //     echo json_encode([0, "Error al realizar la consulta", "Por favor intentelo en un momento", "error", $_inci]);
-                        //     exit();
-                        // } else {
-
-                        // }
                     } else {
-                        echo json_encode([0, $VAL_CEDULA_[1], "Asegurese que la cédula ingresada sea la correcta", "error"]);
+                        $_inci = array(
+                            "ERROR_TYPE" => "ERROR DATOS_API_REGISTRO_SEN",
+                            "ERROR_CODE" => "DATOS_API_REGISTRO_SEN",
+                            "ERROR_TEXT" => "ERROR AL OBTENER DATOS REGISTRO" . json_encode($DATOS_API_CEDULA),
+                        );
+                        $INC = $this->INCIDENCIAS($_inci);
+                        $this->ELIMINAR_LINEA_ERROR($ID_UNICO_TRANSACCION);
+                        echo json_encode([0, "Error al realizar la consulta", $DATOS_API_CEDULA[1], "error", $_inci]);
                         exit();
                     }
+                    // if ($DATOS_API_CEDULA[0] == 1) {
+                    //     if ($GUARDAR_DATOS_API_REG[0] == 1) {
+                    //         $FECHA_NACIM = trim($DATOS_API_CEDULA[1]["SOCIODEMOGRAFICO"][0]["FECH_NAC"]);
+                    //         $DATOS_CRE = $this->Obtener_Datos_Credito($CEDULA_, $FECHA_NACIM, $celular, $ID_UNICO_TRANSACCION, $DATOS_API_CEDULA);
+                    //         // echo json_encode($DATOS_CRE);
+                    //         // exit();
+                    //         if ($DATOS_CRE[0] == 1) {
+                    //             $DATOS_API_CREDITO = $this->DATOS_API_CREDITO($ID_UNICO_TRANSACCION);
+                    //             if ($DATOS_API_CREDITO[0] == 1) {
+                    //                 $DATOS_CREDITO_ = $DATOS_API_CREDITO[1][0];
+                    //                 $TIPO_CONSULTA = $tipo;
+                    //                 $this->MOSTRAR_RESULTADO($DATOS_CREDITO_, $ID_UNICO_TRANSACCION, $TIPO_CONSULTA);
+                    //                 // echo json_encode($DATOS_API_CREDITO);
+                    //                 // exit();
+                    //             }
+                    //         } else if ($DATOS_CRE[0] == 2) {
+                    //             $_inci = array(
+                    //                 "ERROR_TYPE" => "API SOL 2",
+                    //                 "ERROR_CODE" => json_encode($DATOS_CRE[1]),
+                    //                 "ERROR_TEXT" => json_encode($DATOS_CRE[2]),
+                    //             );
+                    //             $INC = $this->INCIDENCIAS($_inci);
+                    //             $this->ELIMINAR_LINEA_ERROR($ID_UNICO_TRANSACCION);
+                    //             echo json_encode([0, "Error al realizar la consulta", "Por favor intentelo en un momento", "error", $DATOS_CRE]);
+                    //             exit();
+                    //         } else if ($DATOS_CRE[0] == 3) {
+                    //             $_inci = array(
+                    //                 "ERROR_TYPE" => "API SOL 3",
+                    //                 "ERROR_CODE" => json_encode($DATOS_CRE[1]),
+                    //                 "ERROR_TEXT" => json_encode($DATOS_CRE[2]),
+                    //             );
+                    //             $INC = $this->INCIDENCIAS($_inci);
+                    //             $this->ELIMINAR_LINEA_ERROR($ID_UNICO_TRANSACCION);
+                    //             echo json_encode([0, "Error al realizar la consulta", "Por favor intentelo en un momento", "error", $_inci]);
+                    //             exit();
+                    //         } else {
+                    //             $_inci = array(
+                    //                 "ERROR_TYPE" => "API SOL",
+                    //                 "ERROR_CODE" => $DATOS_CRE[1],
+                    //                 "ERROR_TEXT" => $DATOS_CRE[2] . "-" . $DATOS_CRE[3],
+                    //             );
+                    //             $INC = $this->INCIDENCIAS($_inci);
+                    //             $this->ELIMINAR_LINEA_ERROR($ID_UNICO_TRANSACCION);
+                    //             echo json_encode([0, "Error al realizar la consulta", "Por favor intentelo en un momento", "error", $DATOS_CRE]);
+                    //             exit();
+                    //         }
+                    //     } else {
+                    //         $_inci = array(
+                    //             "ERROR_TYPE" => "ERROR GUARDAR_DATOS_API_REG",
+                    //             "ERROR_CODE" => $GUARDAR_DATOS_API_REG[1],
+                    //             "ERROR_TEXT" => $GUARDAR_DATOS_API_REG[2],
+                    //         );
+                    //         $INC = $this->INCIDENCIAS($_inci);
+                    //         $this->ELIMINAR_LINEA_ERROR($ID_UNICO_TRANSACCION);
+                    //         echo json_encode([0, "Error al realizar la consulta", "Por favor intentelo en un momento", "error", $_inci]);
+                    //         exit();
+                    //     }
+                    // } else if ($DATOS_API_CEDULA[0] == 2) {
+                    //     $_inci = array(
+                    //         "ERROR_TYPE" => "ENCRIP",
+                    //         "ERROR_CODE" => ($DATOS_API_CEDULA[1]),
+                    //         "ERROR_TEXT" => "ERROR AL OBTENER CEDULA ENCRIPTADA",
+                    //     );
+                    //     $INC = $this->INCIDENCIAS($_inci);
+                    //     $this->ELIMINAR_LINEA_ERROR($ID_UNICO_TRANSACCION);
+                    //     echo json_encode([0, "Error al realizar la consulta", $DATOS_API_CEDULA[1], $_inci]);
+                    //     exit();
+                    // } else if ($DATOS_API_CEDULA[0] == 3) {
+                    //     $_inci = array(
+                    //         "ERROR_TYPE" => "ERROR API REG",
+                    //         "ERROR_CODE" => $DATOS_API_CEDULA[1] . "-" . $DATOS_API_CEDULA[2],
+                    //         "ERROR_TEXT" => "API NO TIENE RESPUESTA",
+                    //     );
+                    //     $INC = $this->INCIDENCIAS($_inci);
+                    //     $this->ELIMINAR_LINEA_ERROR($ID_UNICO_TRANSACCION);
+                    //     echo json_encode([0, "Error al realizar la consulta", "Por favor intentelo en un momento", "error", $_inci]);
+                    //     exit();
+                    // } else {
+
+                    // }
                 } else {
-                    echo json_encode([0, $VAL_CONSULTA[1], "Asegurese que la cédula ingresada sea la correcta", "error"]);
+                    echo json_encode([0, $VAL_CEDULA_[1], "Asegurese que la cédula ingresada sea la correcta", "error"]);
                     exit();
                 }
+            } else {
+                echo json_encode([0, $VAL_CONSULTA[1], "Asegurese que la cédula ingresada sea la correcta", "error"]);
+                exit();
             }
+            // }
         } catch (PDOException $e) {
             $e = $e->getMessage();
             echo json_encode([0, "No se pudo realizar la verificaciolln", "Intentelo de nuevo", $e]);
@@ -1197,11 +1197,11 @@ class principalmodel extends Model
             $API_SOL_secuencial = $DATOS_CREDITO["secuencial"];
             $API_SOL_ESTADO =  0; // ERROR DESCONOCIDO}
 
-            $dat2a = base64_decode($IMAGEN);
-            $uploadDir = 'recursos/img_bio/';
+            // $dat2a = base64_decode($IMAGEN);
+            // $uploadDir = 'recursos/img_bio/';
             $fileName = $ID_UNICO . ".jpeg";
-            $filePath2 = $uploadDir . $ID_UNICO . ".jpeg";
-            $permisos = 0777;
+            // $filePath2 = $uploadDir . $ID_UNICO . ".jpeg";
+            // $permisos = 0777;
 
             if (isset($DATOS_CREDITO["mensaje"])) {
                 $API_SOL_campania = $DATOS_CREDITO["mensaje"]["campania"];
@@ -1298,11 +1298,11 @@ class principalmodel extends Model
             if ($query->execute()) {
                 $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
-                if (chmod($uploadDir, $permisos)) {
-                }
+                // if (chmod($uploadDir, $permisos)) {
+                // }
 
-                if (file_put_contents($filePath2, $dat2a)) {
-                }
+                // if (file_put_contents($filePath2, $dat2a)) {
+                // }
 
                 if ($API_SOL_ESTADO == 1) {
                     $d = $this->Get_Email($ID_UNICO);

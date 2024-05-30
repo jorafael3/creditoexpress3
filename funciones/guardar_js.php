@@ -31,9 +31,7 @@ $url_Validar_Cedula = constant('URL') . 'principal/Validar_Cedula/';
 
     $("#CELULAR").focus();
 
-
     var element = document.querySelector("#kt_stepper_example_basic");
-
     // Initialize Stepper
     var stepper = new KTStepper(element);
     // Handle next step
@@ -88,17 +86,17 @@ $url_Validar_Cedula = constant('URL') . 'principal/Validar_Cedula/';
             tipo: 2
         }
         AjaxSendReceiveData(url_Validar_Celular, param, function(x) {
-            console.log('x: ', x);
+            
 
 
             if (x[0] == 1) {
-                // TELEFONO = x[1];
-                // ID_UNICO = x[3];
+                TELEFONO = x[1];
+                ID_UNICO = x[3];
                 stepper.goNext();
-                Validar_Codigo(x[3], x[4]);
-                // $("#SECC_COD").append(x[2]);
-                // var codeInputs = $('.code-input');
-                // codeInputs.first().focus();
+                // Validar_Codigo(x[3], x[4]);
+                $("#SECC_COD").append(x[2]);
+                var codeInputs = $('.code-input');
+                codeInputs.first().focus();
             } else if (x[0] == 2) {
                 $("#SECC_CEL").empty();
                 $("#SECC_B").empty();
@@ -109,44 +107,44 @@ $url_Validar_Cedula = constant('URL') . 'principal/Validar_Cedula/';
         });
     }
 
-    function Validar_Codigo(CODIGO, TEL) {
+    function Validar_Codigo() {
         var codeInputs = document.querySelectorAll('.code-input');
-        // var valores = Array.from(codeInputs).map(function(input) {
-        //     return input.value;
-        // });
-        // let CON = 0;
-        // valores.map(function(x) {
-        //     if (x.trim() == "") {
-        //         Mensaje("Ingrese el codigo de 4 digitos", "", "error")
-        //         return;
-        //     } else {
-        //         CON++;
-        //     }
-        // });
-        // if (CON == 4) {
-
-        // }
-
-        let param = {
-            // TELEFONO: $("#CEL_1").val(),
-            TELEFONO: TEL,
-            CODIGO: CODIGO,
-            // CODIGO: valores,
-
-        }
-        AjaxSendReceiveData(url_Validar_Codigo, param, function(x) {
-            console.log('x: ', x);
-            if (x[0] == 1) {
-                $("#SECC_CRE").append(x[2]);
-                // CODIGO_SMS = valores
-                CODIGO_SMS = CODIGO
-                stepper.goNext();
-                $("#SECC_B").addClass("d-none");
-
+        var valores = Array.from(codeInputs).map(function(input) {
+            return input.value;
+        });
+        let CON = 0;
+        valores.map(function(x) {
+            if (x.trim() == "") {
+                Mensaje("Ingrese el codigo de 4 digitos", "", "error")
+                return;
             } else {
-                Mensaje(x[1], "", x[2]);
+                CON++;
             }
         });
+        if (CON == 4) {
+            let param = {
+                TELEFONO: $("#CEL_1").val(),
+                // TELEFONO: TEL,
+                // CODIGO: CODIGO,
+                CODIGO: valores,
+
+            }
+            AjaxSendReceiveData(url_Validar_Codigo, param, function(x) {
+                
+                if (x[0] == 1) {
+                    $("#SECC_CRE").append(x[2]);
+                    CODIGO_SMS = valores
+                    // CODIGO_SMS = CODIGO
+                    stepper.goNext();
+                    // $("#SECC_B").addClass("d-none");
+
+                } else {
+                    Mensaje(x[1], "", x[2]);
+                }
+            });
+        }
+
+
     }
 
     function Verificar() {
@@ -171,32 +169,32 @@ $url_Validar_Cedula = constant('URL') . 'principal/Validar_Cedula/';
                 CODIGO_SMS: CODIGO_SMS.join('')
             }
 
-            if (IMAGE == null) {
-                Mensaje("No se encontro una fotografia válida", "Por favor vuelva a tomar la foto", "error");
-            } else {
-                $("#SECCION_GIF").removeClass("d-none");
-                $("#SECCION_FOTO").addClass("d-none");
-                $("#SECC_B").addClass("d-none");
-                AjaxSendReceiveData(url_Validar_Cedula, param, function(x) {
+            $("#SECCION_GIF").removeClass("d-none");
+            $("#SECCION_INGRESO_DATOS").addClass("d-none");
+            $("#SECC_B").addClass("d-none");
+            AjaxSendReceiveData(url_Validar_Cedula, param, function(x) {
+                // $("#SECCION_GIF").addClass("d-none");
+                // $("#SECCION_FOTO_CEDULA").removeClass("d-none");
+                // $("#SECC_B").removeClass("d-none");
+                // Mensaje(x[1],JSON.stringify(x[3]),"")
+                if (x[0] == 1) {
+                    $("#SECCION_GIF").addClass("d-none");
+                    $("#SECC_CRE").empty();
+                    $("#SECC_B").empty();
+                    $("#SECCION_FOTO").empty();
+                    $("#SECC_APR").append(x[3]);
+                } else {
+                    $("#SECCION_GIF").addClass("d-none");
+                    $("#SECCION_INGRESO_DATOS").removeClass("d-none");
+                    $("#SECC_B").removeClass("d-none");
+                    Mensaje(x[1], x[2], "error");
+                }
+            });
+            // if (IMAGE == null) {
+            //     Mensaje("No se encontro una fotografia válida", "Por favor vuelva a tomar la foto", "error");
+            // } else {
 
-                    // $("#SECCION_GIF").addClass("d-none");
-                    // $("#SECCION_FOTO_CEDULA").removeClass("d-none");
-                    // $("#SECC_B").removeClass("d-none");
-                    // Mensaje(x[1],JSON.stringify(x[3]),"")
-                    if (x[0] == 1) {
-                        $("#SECCION_GIF").addClass("d-none");
-                        $("#SECC_CRE").empty();
-                        $("#SECC_B").empty();
-                        $("#SECCION_FOTO").empty();
-                        $("#SECC_APR").append(x[3]);
-                    } else {
-                        $("#SECCION_GIF").addClass("d-none");
-                        $("#SECCION_FOTO").removeClass("d-none");
-                        $("#SECC_B").removeClass("d-none");
-                        Mensaje(x[1], x[2], "error");
-                    }
-                });
-            }
+            // }
         }
     }
 
@@ -264,7 +262,6 @@ $url_Validar_Cedula = constant('URL') . 'principal/Validar_Cedula/';
             $("#btnIrDatos").click()
         }
     });
-
 
     $("#BtnBackToDatosCedula").on("click", function(x) {
 
@@ -340,7 +337,6 @@ $url_Validar_Cedula = constant('URL') . 'principal/Validar_Cedula/';
         return regex.test(email);
     }
 
-
     const videoWidth = 320;
     const videoHeight = 320;
     const videoTag = $("#theVideo")[0];
@@ -353,7 +349,6 @@ $url_Validar_Cedula = constant('URL') . 'principal/Validar_Cedula/';
 
     let cameraActive = false;
     let stream;
-
     // Set initial button states
     btnCapture.prop("disabled", true);
     btnDownloadImage.prop("disabled", true);
@@ -408,7 +403,6 @@ $url_Validar_Cedula = constant('URL') . 'principal/Validar_Cedula/';
         cameraActive = false;
         stopCamera();
     });
-
 
     // const videoWidth2 = 320;
     // const videoHeight2 = 320;

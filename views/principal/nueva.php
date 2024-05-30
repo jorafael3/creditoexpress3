@@ -303,7 +303,7 @@ function isMobileDevice()
 
 
                                 </div>
-                                <div id="SECC_BTN_CON_DATOS" class="d-flex flex-stack justify-content-center">
+                                <div id="SECC_BTN_CON_DATOS" class="d-flex flex-stack justify-content-center d-none">
                                     <button class="btn btn-success fw-bold" id="btnIrDatos">
                                         Continuar
                                     </button>
