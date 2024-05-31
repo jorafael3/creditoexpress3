@@ -116,7 +116,7 @@ def login(DATOS):
     try:
         btn = driver.find_element(By.XPATH, "//button[@type='button' and contains(text(), 'Continuar')]")
         btn.click()
-        time.sleep(20)
+        time.sleep(5)
     except Exception as e:
         print(f"Ocurrió un error: {e}")
     # ************************************************
