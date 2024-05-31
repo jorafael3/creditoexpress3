@@ -58,8 +58,21 @@ def cargar_Datos():
 
 
 def login(DATOS):
+    # options = webdriver.ChromeOptions()
+    # options.add_argument('--no-sandbox')
+    # options.add_argument('--disable-dev-shm-usage')
+    # # options.add_argument('--headless')  # Opcional: correr el navegador en modo headless
+
+    # driver = webdriver.Chrome(options=options)
+
     driver.get('https://creditoexpress.bancodelaustro.com/auth/login')
-    time.sleep(15)
+    time.sleep(10)
+        # Hacer scroll hasta el final de la página
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    time.sleep(3)  # Esperar un poco para asegurar que el scroll se complete
+
+
+
     ced = driver.find_element(By.XPATH, '//*[@id="email"]')
     ced.send_keys("fabricio.salvatierra@salvacero.com")
     time.sleep(5)
@@ -76,14 +89,17 @@ def login(DATOS):
 
     # ************************************************
     #INFORMACION DEL COMPRADOR
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    time.sleep(3) 
 
+     
     ced = driver.find_element(By.XPATH, '//*[@id="identification"]')
     ced.send_keys(DATOS["CEDULA"])
     time.sleep(5)
 
     ced = driver.find_element(By.XPATH, '//*[@id="email"]')
     ced.send_keys(DATOS["CORREO"])
-    time.sleep(5)
+    time.sleep(3)
 
     try:
         select_element = WebDriverWait(driver, 10).until(
@@ -94,70 +110,70 @@ def login(DATOS):
         time.sleep(5)
     except Exception as e:
         print(f"Ocurrió un error: {e}")
-    finally:
-        # Cerrar el navegador después de unos segundos para ver el resultado (opcional)
-        time.sleep(5)
-        driver.quit()
+   
+    print("COMBO CAMBIADO")
 
-    btn = driver.find_element(By.XPATH, "//button[@type='button' and contains(text(), 'Continuar')]")
-    btn.click()
-    time.sleep(5)
-
+    try:
+        btn = driver.find_element(By.XPATH, "//button[@type='button' and contains(text(), 'Continuar')]")
+        btn.click()
+        time.sleep(20)
+    except Exception as e:
+        print(f"Ocurrió un error: {e}")
     # ************************************************
 
 
-    try:
-        select_element = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "select[formcontrolname='activity']"))
-        )
-        select = Select(select_element)
-        select.select_by_visible_text("DEPENDIENTE")
-        time.sleep(5)
-    except Exception as e:
-        print(f"Ocurrió un error: {e}")
-    finally:
-        pass
+    # try:
+    #     select_element = WebDriverWait(driver, 10).until(
+    #         EC.presence_of_element_located((By.CSS_SELECTOR, "select[formcontrolname='activity']"))
+    #     )
+    #     select = Select(select_element)
+    #     select.select_by_visible_text("DEPENDIENTE")
+    #     time.sleep(5)
+    # except Exception as e:
+    #     print(f"Ocurrió un error: {e}")
+    # finally:
+    #     pass
 
-    ced = driver.find_element(By.XPATH, '//*[@id="salary"]')
-    ced.send_keys(DATOS["INGRESOS"])
-    time.sleep(5)
+    # ced = driver.find_element(By.XPATH, '//*[@id="salary"]')
+    # ced.send_keys(DATOS["INGRESOS"])
+    # time.sleep(5)
 
-    try:
-        select_element = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "select[formcontrolname='parish']"))
-        )
-        select = Select(select_element)
-        select.select_by_visible_text(DATOS["PARROQUIA"])
-        time.sleep(5)
-    except Exception as e:
-        print(f"Ocurrió un error: {e}")
-    finally:
-        pass
+    # try:
+    #     select_element = WebDriverWait(driver, 10).until(
+    #         EC.presence_of_element_located((By.CSS_SELECTOR, "select[formcontrolname='parish']"))
+    #     )
+    #     select = Select(select_element)
+    #     select.select_by_visible_text(DATOS["PARROQUIA"])
+    #     time.sleep(5)
+    # except Exception as e:
+    #     print(f"Ocurrió un error: {e}")
+    # finally:
+    #     pass
 
-    ced = driver.find_element(By.XPATH, '//*[@id="typeahead-focus-area"]')
-    ced.send_keys(DATOS["ZONA"])
-    time.sleep(5)
+    # ced = driver.find_element(By.XPATH, '//*[@id="typeahead-focus-area"]')
+    # ced.send_keys(DATOS["ZONA"])
+    # time.sleep(5)
 
-    ced = driver.find_element(By.XPATH, '//*[@id="typeahead-focus-sector"]')
-    ced.send_keys(DATOS["SECTOR"])
-    time.sleep(5)
+    # ced = driver.find_element(By.XPATH, '//*[@id="typeahead-focus-sector"]')
+    # ced.send_keys(DATOS["SECTOR"])
+    # time.sleep(5)
 
-    ced = driver.find_element(By.XPATH, '//*[@id="typeahead-focus-neighborhood"]')
-    ced.send_keys(DATOS["BARRIO"])
-    time.sleep(5)
+    # ced = driver.find_element(By.XPATH, '//*[@id="typeahead-focus-neighborhood"]')
+    # ced.send_keys(DATOS["BARRIO"])
+    # time.sleep(5)
 
-    btn = driver.find_element(By.XPATH, "//button[@type='button' and contains(text(), 'Continuar')]")
-    btn.click()
-    time.sleep(5)
+    # btn = driver.find_element(By.XPATH, "//button[@type='button' and contains(text(), 'Continuar')]")
+    # btn.click()
+    # time.sleep(5)
 
-     # Esperar hasta que aparezca el texto "Crédito Negado"
-    credito_negado = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//*[contains(text(), 'Crédito Negado')]"))
-    )
-    if credito_negado:
-        print("La palabra 'Crédito Negado' ha sido encontrada en la página.")
-    else:
-        print("La palabra 'Crédito Negado' no ha sido encontrada en la página.")
+    #  # Esperar hasta que aparezca el texto "Crédito Negado"
+    # credito_negado = WebDriverWait(driver, 10).until(
+    #         EC.presence_of_element_located((By.XPATH, "//*[contains(text(), 'Crédito Negado')]"))
+    # )
+    # if credito_negado:
+    #     print("La palabra 'Crédito Negado' ha sido encontrada en la página.")
+    # else:
+    #     print("La palabra 'Crédito Negado' no ha sido encontrada en la página.")
 
 
-login()
+cargar_Datos()
