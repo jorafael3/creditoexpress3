@@ -122,45 +122,49 @@ def login(DATOS):
     # ************************************************
 
 
-    # try:
-    #     select_element = WebDriverWait(driver, 10).until(
-    #         EC.presence_of_element_located((By.CSS_SELECTOR, "select[formcontrolname='activity']"))
-    #     )
-    #     select = Select(select_element)
-    #     select.select_by_visible_text("DEPENDIENTE")
-    #     time.sleep(5)
-    # except Exception as e:
-    #     print(f"Ocurrió un error: {e}")
-    # finally:
-    #     pass
+    try:
+        select_element = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, "select[formcontrolname='activity']"))
+        )
+        select = Select(select_element)
+        select.select_by_visible_text("DEPENDIENTE")
+        time.sleep(5)
+    except Exception as e:
+        print(f"Ocurrió un error: {e}")
+    finally:
+        pass
 
-    # ced = driver.find_element(By.XPATH, '//*[@id="salary"]')
-    # ced.send_keys(DATOS["INGRESOS"])
-    # time.sleep(5)
+    ced = driver.find_element(By.XPATH, '//*[@id="salary"]')
+    ced.send_keys("")
+    ced.send_keys(DATOS["INGRESOS"])
+    time.sleep(5)
 
-    # try:
-    #     select_element = WebDriverWait(driver, 10).until(
-    #         EC.presence_of_element_located((By.CSS_SELECTOR, "select[formcontrolname='parish']"))
-    #     )
-    #     select = Select(select_element)
-    #     select.select_by_visible_text(DATOS["PARROQUIA"])
-    #     time.sleep(5)
-    # except Exception as e:
-    #     print(f"Ocurrió un error: {e}")
-    # finally:
-    #     pass
+    try:
+        select_element = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, "select[formcontrolname='parish']"))
+        )
+        select = Select(select_element)
+        select.select_by_visible_text(DATOS["PARROQUIA"])
+        time.sleep(5)
+    except Exception as e:
+        print(f"Ocurrió un error: {e}")
+    finally:
+        pass
 
-    # ced = driver.find_element(By.XPATH, '//*[@id="typeahead-focus-area"]')
-    # ced.send_keys(DATOS["ZONA"])
-    # time.sleep(5)
+    ced = driver.find_element(By.XPATH, '//*[@id="typeahead-focus-area"]')
+    ced.send_keys("")
+    ced.send_keys(DATOS["ZONA"])
+    time.sleep(5)
 
-    # ced = driver.find_element(By.XPATH, '//*[@id="typeahead-focus-sector"]')
-    # ced.send_keys(DATOS["SECTOR"])
-    # time.sleep(5)
+    ced = driver.find_element(By.XPATH, '//*[@id="typeahead-focus-sector"]')
+    ced.send_keys("")
+    ced.send_keys(DATOS["SECTOR"])
+    time.sleep(5)
 
-    # ced = driver.find_element(By.XPATH, '//*[@id="typeahead-focus-neighborhood"]')
-    # ced.send_keys(DATOS["BARRIO"])
-    # time.sleep(5)
+    ced = driver.find_element(By.XPATH, '//*[@id="typeahead-focus-neighborhood"]')
+    ced.send_keys("")
+    ced.send_keys(DATOS["BARRIO"])
+    time.sleep(5)
 
     # btn = driver.find_element(By.XPATH, "//button[@type='button' and contains(text(), 'Continuar')]")
     # btn.click()
