@@ -328,10 +328,8 @@ def Datos_Aprobados():
         key = data_rows[i].text.strip()
         value = data_rows[i + 1].text.strip()
         data[key] = value
-
     # Extract the final values
     final_values_rows = soup.select('div.container.text-center > div.row > div')
-
     final_values = {}
     for i in range(0, len(final_values_rows), 2):
         key = final_values_rows[i].text.strip()
@@ -342,6 +340,10 @@ def Datos_Aprobados():
     data.update(final_values)
 
     print(data)
+
+
+# def Guardar_Datos_Aprobados():
+     
 
 
 Datos_Aprobados()
