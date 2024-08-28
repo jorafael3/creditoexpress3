@@ -3,9 +3,45 @@ import subprocess
 import mysql.connector
 from mysql.connector import Error
 import logging
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+# Configuración del servidor de correo
+SMTP_SERVER = "smtp.gmail.com"  # Cambia esto si usas otro servidor SMTP
+SMTP_PORT = 587  # Usualmente 587 para TLS
+SMTP_USER = "jalvaradoe3@gmail.com"  # Cambia a tu correo
+SMTP_PASSWORD = "bfdv olrv ctlf kgzf"  # Cambia a tu contraseña
+
+# Configuración de destinatario y remitente
+FROM_EMAIL = SMTP_USER
+TO_EMAIL = "jalvaradoe3@gmail.com" 
 
 # Configuración de logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+def enviar_correo_error(mensaje):
+    try:
+        # Configuración del correo
+        msg = MIMEMultipart()
+        msg['From'] = FROM_EMAIL
+        msg['To'] = TO_EMAIL
+        msg['Subject'] = "Error en el Script de Encriptación"
+        
+        # Cuerpo del correo
+        mensaje = "ERROR EN EL ENCRIPTADOR, PONERSE EN CONTACTO PARA REVISARLO "+ str(mensaje)
+        msg.attach(MIMEText(mensaje, 'plain'))
+        
+        # Conectar al servidor SMTP
+        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
+        server.starttls()
+        server.login(SMTP_USER, SMTP_PASSWORD)
+        server.send_message(msg)
+        server.quit()
+        
+        logging.info("Correo de error enviado correctamente.")
+    except Exception as e:
+        logging.error(f"Fallo al enviar el correo: {e}")
+
 
 def run_csharp_file_with_parameter(parameter):
     dotnet_executable = "C:\\Program Files\\dotnet\\dotnet.exe"
@@ -73,7 +109,15 @@ def Cargar_Datos():
             intentos += 1
             sleep_time = min(2 ** intentos, 300)  # Espera exponencial con un máximo de 5 minutos
             logging.info(f"Reintentando en {sleep_time} segundos...")
+            enviar_correo_error(f"Error de conexión: {e}")
             time.sleep(sleep_time)
+
+        except Exception as e:
+            logging.error(f"Error inesperado: {e}")
+            enviar_correo_error(f"Error inesperado: {e}")
+            raise  # Vuelve a lanzar la excepción para que se maneje de acuerdo a la lógica del script
 
 if __name__ == "__main__":
     Cargar_Datos()
+    # enviar_correo_error(f"Error inesperado:")
+
