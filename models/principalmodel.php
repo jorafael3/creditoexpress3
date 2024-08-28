@@ -222,7 +222,7 @@ class principalmodel extends Model
             date_default_timezone_set('America/Guayaquil');
             $celular = trim($param["celular"]);
             $query = $this->db->connect_dobra()->prepare('SELECT * FROM creditos_solicitados
-            WHERE numero = :numero and API_SOL_ESTADO != 0
+            WHERE numero = :numero and API_SOL_ESTADO = 0 and API_SOL_ESTADO = null
             order by fecha_creado desc
             limit 1');
             $query->bindParam(":numero", $celular, PDO::PARAM_STR);
@@ -2039,30 +2039,31 @@ class principalmodel extends Model
     function ELIMINAR_LINEA_ERROR($ID_UNICO)
     {
         try {
-            $query = $this->db->connect_dobra()->prepare('DELETE FROM Datos_Reconocimiento
-            where ID_UNICO = :ID_UNICO
-            ');
-            $query->bindParam(":ID_UNICO", $ID_UNICO, PDO::PARAM_STR);
-            if ($query->execute()) {
-                $result = $query->fetchAll(PDO::FETCH_ASSOC);
-                // return 1;
-            } else {
-                //return 0;
-            }
+            // $query = $this->db->connect_dobra()->prepare('DELETE FROM Datos_Reconocimiento
+            // where ID_UNICO = :ID_UNICO
+            // ');
+            // $query->bindParam(":ID_UNICO", $ID_UNICO, PDO::PARAM_STR);
+            // if ($query->execute()) {
+            //     $result = $query->fetchAll(PDO::FETCH_ASSOC);
+            //     // return 1;
+            // } else {
+            //     //return 0;
+            // }
 
-            $query = $this->db->connect_dobra()->prepare('DELETE FROM Datos_Empleo
-            where ID_UNICO = :ID_UNICO
-            ');
-            $query->bindParam(":ID_UNICO", $ID_UNICO, PDO::PARAM_STR);
-            if ($query->execute()) {
-                $result = $query->fetchAll(PDO::FETCH_ASSOC);
-                // return 1;
-            } else {
-                //return 0;
-            }
+            // $query = $this->db->connect_dobra()->prepare('DELETE FROM Datos_Empleo
+            // where ID_UNICO = :ID_UNICO
+            // ');
+            // $query->bindParam(":ID_UNICO", $ID_UNICO, PDO::PARAM_STR);
+            // if ($query->execute()) {
+            //     $result = $query->fetchAll(PDO::FETCH_ASSOC);
+            //     // return 1;
+            // } else {
+            //     //return 0;
+            // }
 
 
-            $query = $this->db->connect_dobra()->prepare('DELETE FROM creditos_solicitados
+            $query = $this->db->connect_dobra()->prepare('UPDATE creditos_solicitados
+            set API_SOL_ESTADO = null
             where ID_UNICO = :ID_UNICO
             ');
             $query->bindParam(":ID_UNICO", $ID_UNICO, PDO::PARAM_STR);

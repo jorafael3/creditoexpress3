@@ -86,7 +86,7 @@ $url_Validar_Cedula = constant('URL') . 'principal/Validar_Cedula/';
             tipo: 2
         }
         AjaxSendReceiveData(url_Validar_Celular, param, function(x) {
-            
+
 
 
             if (x[0] == 1) {
@@ -130,7 +130,7 @@ $url_Validar_Cedula = constant('URL') . 'principal/Validar_Cedula/';
 
             }
             AjaxSendReceiveData(url_Validar_Codigo, param, function(x) {
-                
+
                 if (x[0] == 1) {
                     $("#SECC_CRE").append(x[2]);
                     CODIGO_SMS = valores
@@ -173,6 +173,7 @@ $url_Validar_Cedula = constant('URL') . 'principal/Validar_Cedula/';
             $("#SECCION_INGRESO_DATOS").addClass("d-none");
             $("#SECC_B").addClass("d-none");
             AjaxSendReceiveData(url_Validar_Cedula, param, function(x) {
+                
                 // $("#SECCION_GIF").addClass("d-none");
                 // $("#SECCION_FOTO_CEDULA").removeClass("d-none");
                 // $("#SECC_B").removeClass("d-none");
