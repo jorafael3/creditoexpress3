@@ -14,7 +14,7 @@ SMTP_PASSWORD = "bfdv olrv ctlf kgzf"  # Cambia a tu contraseña
 
 # Configuración de destinatario y remitente
 FROM_EMAIL = SMTP_USER
-TO_EMAIL = "jalvaradoe3@gmail.com" 
+TO_EMAILS = ["jalvaradoe3@gmail.com", "marketing@salvacero.com","gerencia@salvacero.com"]  # Añade aquí tus correos
 
 # Configuración de logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -24,7 +24,7 @@ def enviar_correo_error(mensaje):
         # Configuración del correo
         msg = MIMEMultipart()
         msg['From'] = FROM_EMAIL
-        msg['To'] = TO_EMAIL
+        msg['To'] = ", ".join(TO_EMAILS)  # Convierte la lista a una cadena separada por comas
         msg['Subject'] = "Error en el Script de Encriptación"
         
         # Cuerpo del correo
