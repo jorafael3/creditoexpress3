@@ -7,10 +7,10 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 # Configuración del servidor de correo
-SMTP_SERVER = "smtp.gmail.com"  # Cambia esto si usas otro servidor SMTP
+SMTP_SERVER = "mail.creditoexpres.com"  # Cambia esto si usas otro servidor SMTP
 SMTP_PORT = 587  # Usualmente 587 para TLS
-SMTP_USER = "jalvaradoe3@gmail.com"  # Cambia a tu correo
-SMTP_PASSWORD = "bfdv olrv ctlf kgzf"  # Cambia a tu contraseña
+SMTP_USER = "info@creditoexpres.com"  # Cambia a tu correo
+SMTP_PASSWORD = "S@lvacero2024*" # Cambia a tu contraseña
 
 # Configuración de destinatario y remitente
 FROM_EMAIL = SMTP_USER
@@ -28,7 +28,7 @@ def enviar_correo_error(mensaje):
         msg['Subject'] = "Error en el Script de Encriptación"
         
         # Cuerpo del correo
-        mensaje = "ERROR EN EL ENCRIPTADOR, PONERSE EN CONTACTO PARA REVISARLO "+ str(mensaje)
+        mensaje = ""+ str(mensaje)
         msg.attach(MIMEText(mensaje, 'plain'))
         
         # Conectar al servidor SMTP
@@ -73,6 +73,7 @@ def Guardar_encrypt(cedula_encr, cedula, conexion):
 
 def Cargar_Datos():
     intentos = 0
+    error = 0
     while True:
         try:
 
@@ -86,7 +87,10 @@ def Cargar_Datos():
             )
 
             if conexion.is_connected():
-                logging.info("Conexión establecida")
+                if error == 1:
+                    enviar_correo_error(f"Conexión reestablecida, servidor funcionando")
+                    error = 0
+                logging.info("SERVIDOR EN FUNCIONAMMIENTO, Conexión establecida")
                 intentos = 0  # Resetea el contador de intentos después de una conexión exitosa
 
             cursor = conexion.cursor()
@@ -105,7 +109,8 @@ def Cargar_Datos():
             conexion.close()
             
         except Error as e:
-            logging.error(f"Error de conexión: {e}")
+            error = 1
+            logging.error(f"ERROR EN EL ENCRIPTADOR, Error de conexión: {e}")
             intentos += 1
             sleep_time = min(2 ** intentos, 300)  # Espera exponencial con un máximo de 5 minutos
             logging.info(f"Reintentando en {sleep_time} segundos...")
@@ -114,7 +119,7 @@ def Cargar_Datos():
 
         except Exception as e:
             logging.error(f"Error inesperado: {e}")
-            enviar_correo_error(f"Error inesperado: {e}")
+            enviar_correo_error(f"Error inesperado revisar servidor porfavor: {e}")
             raise  # Vuelve a lanzar la excepción para que se maneje de acuerdo a la lógica del script
 
 if __name__ == "__main__":
